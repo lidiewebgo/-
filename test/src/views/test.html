@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .group {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 500px;
+            height: 200px;
+        }
+
+        .group>div {
+            margin: 20px;
+            border: 1px solid #333;
+            width: 200px;
+            cursor: pointer;
+        }
+
+        .group>div p {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="group">
+        <div class="drag-block">
+            <!-- 操作dom 时必须要有ID-->
+            <p id="drag" draggable="true" ondragstart="drag(event)">我是可拖动元素</p>
+        </div>
+        <div id="drop" ondrop="drop(event)" ondragover="dropOver(event)" class="drop-block"></div>
+    </div>
+</body>
+
+</html>
+<script>
+    function dropOver(e) {
+        e.preventDefault(); // 在拖动中阻止默认事件
+    }
+
+    function drag(e) {
+        console.log(e.target.innerHTML)
+ 
+        // 开始拖动
+        e.dataTransfer.setData("Text", e.target.innerHTML);
+    }
+
+    function drop(e) {
+        e.preventDefault();
+        // 将拖动元素旋转到目标区域中
+        var data = e.dataTransfer.getData("Text");
+        console.log(data)
+        e.target.innerHTML= data
+    }
+</script>
